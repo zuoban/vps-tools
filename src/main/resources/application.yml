@@ -1,8 +1,11 @@
-storage:
-  location: /root/Download
-logging:
-  level:
-    root: info
-    org.apache.coyote.http11.Http11InputBuffer: debug
+
+spring:
+  application:
+    name: vps-tools
+  profiles:
+    active: prod
+server:
+  servlet:
+    context-path: /vps-tools
 
 

@@ -1,0 +1,6 @@
+storage:
+  location: /Users/wangjinqiang/Download
+logging:
+  level:
+    root: info
+    org.apache.coyote.http11.Http11InputBuffer: debug
