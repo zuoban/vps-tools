@@ -16,4 +16,10 @@ public interface DownloadService {
      * @param url
      */
     void aria2Download(String url);
+
+    /**
+     * 用 wget 下载
+     * @param url
+     */
+    void wgetDownload(String url);
 }
