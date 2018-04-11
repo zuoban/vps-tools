@@ -2,11 +2,8 @@ spring:
   application:
     name: vps-tools
   profiles:
-    active: dev
+    active: prod
 user:
   user-name: zuoban
   password: $2a$10$V56/vX7qVqBYD3ZlwkIXhuQo8sVjbkjxbO4e9zxDR45C4Zh3U5azK
-
-
-
 
