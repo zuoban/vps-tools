@@ -5,10 +5,9 @@ import com.zuoban.toy.vpstools.properties.StorageProperties;
 import com.zuoban.toy.vpstools.service.DownloadService;
 import com.zuoban.toy.vpstools.service.FileSystemService;
 import com.zuoban.toy.vpstools.vo.FileInfo;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -63,12 +64,15 @@ public class DownloadController {
     @GetMapping(value = "download-file")
     private ResponseEntity downloadFile(String path) throws IOException {
         Assert.isTrue(!path.contains(".."), "路径有误");
-        Path file = savePath.resolve(path);
+        File file = savePath.resolve(path).toFile();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("attachment", new String(file.getFileName().toString().getBytes("UTF-8"), "ISO8859-1"));
-        byte[] bytes = IOUtils.toByteArray(file.toUri());
-        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(bytes);
+        headers.setContentDispositionFormData("attachment", new String(file.getName().getBytes("UTF-8"), "ISO8859-1"));
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentLength(file.length())
+                .body(resource);
     }
 
     @GetMapping(value = "delete-file")
