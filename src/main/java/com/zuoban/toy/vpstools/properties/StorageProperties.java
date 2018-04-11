@@ -4,13 +4,16 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-@ConfigurationProperties("storage")
+/**
+ *
+ * @author wangjinqiang
+ */
+@ConfigurationProperties(prefix = "storage")
 @Data
 @Component
 public class StorageProperties {
-
     /**
-     * Folder location for storing files
+     * 存储文件类路径
      */
     private String location = "upload-dir";
 

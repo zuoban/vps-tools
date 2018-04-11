@@ -3,22 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>操作成功</title>
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-12 column">
-            <div class="alert alert-success alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h4>
-                    操作成功
-                </h4> <strong th:text="${msg}"></strong>  <a href="#" class="alert-link">首页</a>
+            <div class="alert alert-success" role="alert">
+                <h5> 操作成功 </h5>
+                <strong th:text="${msg}"></strong>
             </div>
         </div>
     </div>
 </div>
-
+<script th:inline="javascript">
+    setTimeout(function(){
+        window.location=/*[[@{/}]]*/'/';
+    },2000)
+</script>
 </body>
 </html>

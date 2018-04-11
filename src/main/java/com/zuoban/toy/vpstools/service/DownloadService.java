@@ -10,4 +10,10 @@ public interface DownloadService {
      * @param url
      */
     void download(String url);
+
+    /**
+     * 使用 aria2 下载
+     * @param url
+     */
+    void aria2Download(String url);
 }
