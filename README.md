@@ -1,5 +1,6 @@
 # vps-tools
-用于vps 上传下载
+## 功能
+- 下载文件
 ## 安装
 ```
 git clone https://github.com/zuoban/vps-tools.git
