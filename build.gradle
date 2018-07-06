@@ -40,4 +40,5 @@ dependencies {
     compile group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.9.RELEASE'
     optional "org.springframework.boot:spring-boot-configuration-processor"
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 }
