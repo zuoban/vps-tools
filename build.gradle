@@ -41,4 +41,6 @@ dependencies {
     optional "org.springframework.boot:spring-boot-configuration-processor"
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    compile 'cn.hutool:hutool-all:4.1.14'
+
 }

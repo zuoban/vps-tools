@@ -89,12 +89,14 @@ public class DownloadController {
     }
 
     @PostMapping("/download")
-    private String download(String url, @RequestParam(value = "aria2", defaultValue = "false") Boolean aria2) {
+    private String download(String url, @RequestParam(value = "type", defaultValue = "0") Integer type) {
         try {
-            if (aria2) {
-                downloadService.aria2Download(url);
-            } else {
+            if (type == 0) {
                 downloadService.download(url);
+            } else if (type == 1) {
+                downloadService.aria2Download(url);
+            } else if (type == 2) {
+                downloadService.tumblrDownload(url);
             }
             return URLConsts.SUCCESS_PAGE;
         } catch (Exception e) {

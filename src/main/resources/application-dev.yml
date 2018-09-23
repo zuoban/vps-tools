@@ -1,5 +1,5 @@
 storage:
-  location: /Users/wangjinqiang/Download
+  location: /Users/wangjinqiang/Download/temp
 logging:
   level:
     root: info

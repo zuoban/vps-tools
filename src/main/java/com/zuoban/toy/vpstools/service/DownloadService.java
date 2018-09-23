@@ -22,4 +22,6 @@ public interface DownloadService {
      * @param url
      */
     void wgetDownload(String url);
+
+    void tumblrDownload(String url);
 }

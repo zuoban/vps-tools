@@ -1,31 +1,35 @@
 package com.zuoban.toy.vpstools.service;
 
+import cn.hutool.core.util.RuntimeUtil;
 import com.zuoban.toy.vpstools.properties.StorageProperties;
+import com.zuoban.toy.vpstools.properties.TumblrProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 
 @Service
+@Slf4j
 public class DownloadServiceImpl implements DownloadService {
 
     private StorageProperties storageProperties;
+    private final TumblrProperties tumblrProperties;
 
 
     @Autowired
-    public DownloadServiceImpl(StorageProperties storageProperties) throws IOException {
+    public DownloadServiceImpl(StorageProperties storageProperties, TumblrProperties tumblrProperties) throws IOException {
         this.storageProperties = storageProperties;
         Path locationPath = Paths.get(storageProperties.getLocation());
         if (Files.notExists(locationPath)) {
             Files.createDirectories(locationPath);
         }
+        this.tumblrProperties = tumblrProperties;
     }
 
     @Override
@@ -40,45 +44,19 @@ public class DownloadServiceImpl implements DownloadService {
 
     @Override
     public void aria2Download(String url) {
-        execute("aria2c", url);
+        String result = RuntimeUtil.execForStr("aria2c", url);
+        log.info("aria2 download result: " + result);
     }
 
     @Override
     public void wgetDownload(String url) {
-        execute("wget", url);
+        String result = RuntimeUtil.execForStr("wget", url);
+        log.info("wget download result: " + result);
     }
 
-    private void execute(String... command) {
-        try {
-            ProcessBuilder processBuilder = new ProcessBuilder();
-            processBuilder.directory(new File(storageProperties.getLocation()));
-            processBuilder.command(command);
-            Process process = processBuilder.start();
-            StreamGobbler streamGobbler =
-                    new StreamGobbler(process.getInputStream(), System.out::println);
-            Executors.newSingleThreadExecutor().submit(streamGobbler);
-            int exitCode = process.waitFor();
-            assert exitCode == 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+    @Override
+    public void tumblrDownload(String url) {
+        String result = RuntimeUtil.execForStr(String.format("youtube-dl -u %s -p %s %s -o %s", tumblrProperties.getUsername(), tumblrProperties.getPassword(), url, storageProperties.getLocation()));
+        log.info("tumblr download result: ", result);
     }
-
-    private static class StreamGobbler implements Runnable {
-        private InputStream inputStream;
-        private Consumer<String> consumer;
-
-        public StreamGobbler(InputStream inputStream, Consumer<String> consumer) {
-            this.inputStream = inputStream;
-            this.consumer = consumer;
-        }
-
-        @Override
-        public void run() {
-            new BufferedReader(new InputStreamReader(inputStream)).lines()
-                    .forEach(consumer);
-        }
-    }
-
 }
