@@ -58,7 +58,7 @@ public class DownloadServiceImpl implements DownloadService {
     @Override
     public void tumblrDownload(String url) {
 
-        String cmd = StrUtil.format("youtube-dl -u {} -p {} {} -o 'B:{}/%(title)s.%(ext)s'", tumblrProperties.getUsername(), tumblrProperties.getPassword(), url, storageProperties.getLocation());
+        String cmd = StrUtil.format("youtube-dl -u {} -p {} {} -o '{}/%(title)s.%(ext)s'", tumblrProperties.getUsername(), tumblrProperties.getPassword(), url, storageProperties.getLocation());
         String result = RuntimeUtil.execForStr(cmd);
         log.info("cmd: {}", cmd);
         log.info("tumblr download result: {}", result);
