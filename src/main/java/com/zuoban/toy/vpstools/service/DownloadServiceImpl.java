@@ -1,6 +1,7 @@
 package com.zuoban.toy.vpstools.service;
 
 import cn.hutool.core.util.RuntimeUtil;
+import cn.hutool.core.util.StrUtil;
 import com.zuoban.toy.vpstools.properties.StorageProperties;
 import com.zuoban.toy.vpstools.properties.TumblrProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +57,8 @@ public class DownloadServiceImpl implements DownloadService {
 
     @Override
     public void tumblrDownload(String url) {
-        String cmd = String.format("youtube-dl -u %s -p %s %s -o %s", tumblrProperties.getUsername(), tumblrProperties.getPassword(), url, storageProperties.getLocation());
+
+        String cmd = StrUtil.format("youtube-dl -u {} -p {} {} -o 'B:{}/%(title)s.%(ext)s'", tumblrProperties.getUsername(), tumblrProperties.getPassword(), url, storageProperties.getLocation());
         String result = RuntimeUtil.execForStr(cmd);
         log.info("cmd: {}", cmd);
         log.info("tumblr download result: {}", result);
