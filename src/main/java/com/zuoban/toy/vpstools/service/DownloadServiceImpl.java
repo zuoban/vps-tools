@@ -1,5 +1,7 @@
 package com.zuoban.toy.vpstools.service;
 
+import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.RuntimeUtil;
 import cn.hutool.core.util.StrUtil;
 import com.zuoban.toy.vpstools.properties.StorageProperties;
@@ -14,6 +16,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -57,8 +60,9 @@ public class DownloadServiceImpl implements DownloadService {
 
     @Override
     public void tumblrDownload(String url) {
-
-        String cmd = StrUtil.format("youtube-dl -u {} -p {} {} -o '{}/%(title)s.%(ext)s'", tumblrProperties.getUsername(), tumblrProperties.getPassword(), url, storageProperties.getLocation());
+        List<String> fileNames = ReUtil.findAllGroup0("(\\w+.mp4$)", url);
+        Assert.notEmpty(fileNames, "url格式有误");
+        String cmd = StrUtil.format("youtube-dl -u {} -p {} {} -o '{}/{}'", tumblrProperties.getUsername(), tumblrProperties.getPassword(), url, storageProperties.getLocation(), fileNames.get(0));
         String result = RuntimeUtil.execForStr(cmd);
         log.info("cmd: {}", cmd);
         log.info("tumblr download result: {}", result);
