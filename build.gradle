@@ -20,7 +20,6 @@ apply plugin: 'propdeps'
 apply plugin: 'propdeps-maven'
 apply plugin: 'propdeps-idea'
 apply plugin: 'propdeps-eclipse'
-apply plugin: 'war'
 
 group = 'com.zuoban.toy'
 version = '0.0.1-SNAPSHOT'
