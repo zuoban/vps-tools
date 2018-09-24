@@ -41,10 +41,8 @@ public class UserHolderInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String uri = request.getRequestURI();
-        System.out.println("uri = " + uri);
-        uri = uri.replace("/api", "");
-        System.out.println("uri = " + uri);
-        if (WHITE_LIST_URI.contains(uri)) {
+
+        if (WHITE_LIST_URI.stream().anyMatch(uri::endsWith)) {
             // 在白名单中， 直接放行。
             return true;
         }
