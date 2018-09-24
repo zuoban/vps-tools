@@ -17,6 +17,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -46,10 +47,13 @@ public class UserHolderInterceptor extends HandlerInterceptorAdapter {
 
         System.out.println("WHITE_LIST_URI = " + WHITE_LIST_URI);
 
-        if (WHITE_LIST_URI.stream().anyMatch(uri::endsWith)) {
-            // 在白名单中， 直接放行。
-            System.out.println("in white list");
-            return true;
+        Enumeration<String> headerNames = request.getHeaderNames();
+        System.out.println("headerNames = " + headerNames);
+
+        while (headerNames.hasMoreElements()){
+            String headerName = headerNames.nextElement();
+            System.out.println("headerName = " + headerName);
+            System.out.println("headerValue = " + request.getHeader(headerName));
         }
         String token = ServletUtil.getHeader(request, "X-Token", "utf-8");
 
