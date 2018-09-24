@@ -3,9 +3,20 @@ spring:
     name: vps-tools
   profiles:
     active: dev
+  jpa:
+    hibernate:
+      ddl-auto: update
+  redis:
+    port: 6379
+    host: localhost
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
 user:
   user-name: zuoban
   password: $2a$10$V56/vX7qVqBYD3ZlwkIXhuQo8sVjbkjxbO4e9zxDR45C4Zh3U5azK
+
 
 tumblr:
   username:

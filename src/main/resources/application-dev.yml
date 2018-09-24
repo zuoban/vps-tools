@@ -1,5 +1,5 @@
-storage:
-  location: /Users/wangjinqiang/Download/temp
+app:
+  storage-location: /Users/wangjinqiang/Download/temp
 logging:
   level:
     root: info
@@ -7,3 +7,11 @@ logging:
 spring:
   thymeleaf:
     cache: false
+
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql:///vpsTools?useSSL=false&characterEncoding=utf-8
+
+  jpa:
+    show-sql: true

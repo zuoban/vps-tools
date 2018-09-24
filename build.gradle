@@ -29,16 +29,15 @@ repositories {
     mavenCentral()
 }
 
-
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.springframework.boot:spring-boot-starter-security')
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-data-redis")
+    compile 'mysql:mysql-connector-java'
+
     compileOnly('org.projectlombok:lombok')
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-    compile group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.9.RELEASE'
     optional "org.springframework.boot:spring-boot-configuration-processor"
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
     compile 'cn.hutool:hutool-all:4.1.14'
-
 }

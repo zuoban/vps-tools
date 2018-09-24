@@ -1,4 +1,2 @@
-storage:
-  location: /root/Download
-server:
-  port: 8100
+app:
+  storage-location: /root/Download

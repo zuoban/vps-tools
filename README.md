@@ -10,8 +10,8 @@ gradle build -x test
 ## 配置
 ```
 # application-prod.yml 配置生产环境下载文件保存路径
-storage:
-  location: /root/Download 
+app:
+  storageLocation: /root/Download 
 # applicaton.yml 配置登录用户名和密码, 
 # password通过com.zuoban.toy.vpstools.config.WebSecurityConfig#main加密
 user:
