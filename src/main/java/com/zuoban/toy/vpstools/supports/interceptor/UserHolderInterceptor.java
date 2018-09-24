@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 public class UserHolderInterceptor extends HandlerInterceptorAdapter {
     private final RedisTemplate<String, String> redisTemplate;
 
-    private static final List<String> WHITE_LIST_URI = CollUtil.newArrayList("/user/register", "/user/login", "/user/validate");
+    private static final List<String> WHITE_LIST_URI = CollUtil.newArrayList("/user/register", "/user/login", "/user/validate", "/error");
 
     @Autowired
     public UserHolderInterceptor(RedisTemplate<String, String> redisTemplate) {
@@ -42,8 +42,13 @@ public class UserHolderInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String uri = request.getRequestURI();
 
+        System.out.println("uri = " + uri);
+
+        System.out.println("WHITE_LIST_URI = " + WHITE_LIST_URI);
+
         if (WHITE_LIST_URI.stream().anyMatch(uri::endsWith)) {
             // 在白名单中， 直接放行。
+            System.out.println("in white list");
             return true;
         }
         String token = ServletUtil.getHeader(request, "X-Token", "utf-8");
@@ -70,5 +75,11 @@ public class UserHolderInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         UserHolder.reset();
+    }
+
+    public static void main(String[] args) {
+        String uri = "/user/login";
+        System.out.println(WHITE_LIST_URI.stream().anyMatch(uri::endsWith));
+
     }
 }
