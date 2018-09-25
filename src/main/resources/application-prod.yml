@@ -1,2 +1,5 @@
 app:
   storage-location: /root/Download
+server:
+  servlet:
+    context-path: /vps-tools
