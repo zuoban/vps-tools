@@ -43,18 +43,21 @@ public class UserHolderInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String uri = request.getRequestURI();
 
-        System.out.println("uri = " + uri);
-
-        System.out.println("WHITE_LIST_URI = " + WHITE_LIST_URI);
-
         Enumeration<String> headerNames = request.getHeaderNames();
-        System.out.println("headerNames = " + headerNames);
 
-        while (headerNames.hasMoreElements()){
+        System.out.println(uri);
+
+        while (headerNames.hasMoreElements()) {
             String headerName = headerNames.nextElement();
-            System.out.println("headerName = " + headerName);
-            System.out.println("headerValue = " + request.getHeader(headerName));
+            String headerValue = request.getHeader(headerName);
+            System.out.println(headerName + " = " + headerValue);
         }
+
+        boolean match = WHITE_LIST_URI.stream().anyMatch(uri::endsWith);
+        if (match) {
+            return true;
+        }
+
         String token = ServletUtil.getHeader(request, "X-Token", "utf-8");
 
         if (StrUtil.isNotBlank(token)) {
